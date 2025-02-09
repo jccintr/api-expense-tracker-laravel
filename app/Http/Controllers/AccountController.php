@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
+use App\Models\Account;
 
 class AccountController extends Controller
 {
@@ -14,8 +14,8 @@ class AccountController extends Controller
     public function index()
     {
 
-        $categories = Category::where('user_id',Auth::User()->id)->orderBy('name')->get();
-        return response()->json($categories,200);
+        $accounts = Account::where('user_id',Auth::User()->id)->orderBy('name')->get();
+        return response()->json($accounts,200);
     
     }
 
@@ -26,15 +26,16 @@ class AccountController extends Controller
     {
        $user_id =  Auth::User()->id;
        $name = $request->name;
-       $description = $request->description;
-       if(!$name or !$description){
+      
+       if(!$name){
         return response()->json(['erro'=>'Bad request'],400);
        }
-       $newCategory = new Category();
-       $newCategory->name = $name;
-       $newCategory->description = $description;
-       $newCategory->save();
-       return response()->json($newCategory,201);
+
+       $newAccount = new Account();
+       $newAccount->name = $name;
+       $newAccount->user_id = $user_id;
+       $newAccount->save();
+       return response()->json($newAccount,201);
     }
 
     /**
