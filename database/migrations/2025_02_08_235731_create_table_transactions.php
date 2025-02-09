@@ -16,6 +16,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
+            $table->decimal('amount', 5, 2)->default(0);
             $table->foreignIdFor(Category::class);
             $table->foreignIdFor(Account::class);
             $table->foreignIdFor(User::class);
