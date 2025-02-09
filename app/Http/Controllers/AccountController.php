@@ -55,16 +55,16 @@ class AccountController extends Controller
         $name = $request->name;
         
         if(!$name){
-            return response()->json(['erro'=>'Bad request'],400);
+            return response()->json(['error'=>'Bad request'],400);
         }
 
         $account = Account::find($id);
         if(!$account){
-            return response()->json(['erro'=>'Resource not found'],404);
+            return response()->json(['error'=>'Resource not found'],404);
         }
         
         if($account->user_id != Auth::User()->id){
-            return response()->json(['erro'=>'Access denied'],403);
+            return response()->json(['error'=>'Access denied'],403);
         }
 
         $account->name = $name;
@@ -78,6 +78,18 @@ class AccountController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $account = Account::find($id);
+        if(!$account){
+            return response()->json(['error'=>'Resource not found'],404);
+        }
+
+        if($account->user_id != Auth::User()->id){
+            return response()->json(['error'=>'Access denied'],403);
+        }
+
+        $account->delete();
+        return response()->json(['message'=> "Resource deleted"],200);
+        
     }
 }

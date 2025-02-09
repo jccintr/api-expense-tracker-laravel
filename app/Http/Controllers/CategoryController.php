@@ -26,7 +26,7 @@ class CategoryController extends Controller
         $name = $request->name;
        
         if(!$name){
-         return response()->json(['erro'=>'Bad request'],400);
+         return response()->json(['error'=>'Bad request'],400);
         }
 
         $newCategory = new Category();
@@ -52,16 +52,16 @@ class CategoryController extends Controller
         $name = $request->name;
         
         if(!$name){
-            return response()->json(['erro'=>'Bad request'],400);
+            return response()->json(['error'=>'Bad request'],400);
         }
 
         $category = Category::find($id);
         if(!$category){
-            return response()->json(['erro'=>'Resource not found'],404);
+            return response()->json(['error'=>'Resource not found'],404);
         }
         
         if($category->user_id != Auth::User()->id){
-            return response()->json(['erro'=>'Access denied'],403);
+            return response()->json(['error'=>'Access denied'],403);
         }
 
         $category->name = $name;
@@ -75,6 +75,16 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+        if(!$category){
+            return response()->json(['error'=>'Resource not found'],404);
+        }
+
+        if($category->user_id != Auth::User()->id){
+            return response()->json(['error'=>'Access denied'],403);
+        }
+
+        $category->delete();
+        return response()->json(['message'=> "Resource deleted"],200);
     }
 }

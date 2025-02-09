@@ -17,8 +17,10 @@ Route::post('/auth/login',[AuthController::class,'login']);
 Route::middleware('auth:sanctum')->get('/categories',[CategoryController::class,'index']);
 Route::middleware('auth:sanctum')->post('/categories',[CategoryController::class,'store']);
 Route::middleware('auth:sanctum')->put('/categories/{id}',[CategoryController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/categories/{id}',[CategoryController::class,'destroy']);
 // Account Routes
 Route::middleware('auth:sanctum')->get('/accounts',[AccountController::class,'index']);
 Route::middleware('auth:sanctum')->post('/accounts',[AccountController::class,'store']);
 Route::middleware('auth:sanctum')->put('/accounts/{id}',[AccountController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/accounts/{id}',[AccountController::class,'destroy']);
 
