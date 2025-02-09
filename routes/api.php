@@ -16,6 +16,7 @@ Route::post('/auth/login',[AuthController::class,'login']);
 // Category Routes
 Route::middleware('auth:sanctum')->get('/categories',[CategoryController::class,'index']);
 Route::middleware('auth:sanctum')->post('/categories',[CategoryController::class,'store']);
+Route::middleware('auth:sanctum')->put('/categories/{id}',[CategoryController::class,'update']);
 // Account Routes
 Route::middleware('auth:sanctum')->get('/accounts',[AccountController::class,'index']);
 Route::middleware('auth:sanctum')->post('/accounts',[AccountController::class,'store']);

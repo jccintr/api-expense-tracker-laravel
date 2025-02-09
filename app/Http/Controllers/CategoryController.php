@@ -49,7 +49,25 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $name = $request->name;
+        
+        if(!$name){
+            return response()->json(['erro'=>'Bad request'],400);
+        }
+
+        $category = Category::find($id);
+        if(!$category){
+            return response()->json(['erro'=>'Resource not found'],404);
+        }
+        
+        if($category->user_id != Auth::User()->id){
+            return response()->json(['erro'=>'Access denied'],403);
+        }
+
+        $category->name = $name;
+        $category->save(); 
+
+        return response()->json($category,200);
     }
 
     /**
