@@ -51,7 +51,26 @@ class AccountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       
+        $name = $request->name;
+        
+        if(!$name){
+            return response()->json(['erro'=>'Bad request'],400);
+        }
+
+        $account = Account::find($id);
+        if(!$account){
+            return response()->json(['erro'=>'Resource not found'],404);
+        }
+        
+        if($account->user_id != Auth::User()->id){
+            return response()->json(['erro'=>'Access denied'],403);
+        }
+
+        $account->name = $name;
+        $account->save(); 
+
+        return response()->json($account,200);
     }
 
     /**
