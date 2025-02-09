@@ -28,7 +28,7 @@ class AccountController extends Controller
        $name = $request->name;
       
        if(!$name){
-        return response()->json(['erro'=>'Bad request'],400);
+        return response()->json(['error'=>'Bad request'],400);
        }
 
        $newAccount = new Account();

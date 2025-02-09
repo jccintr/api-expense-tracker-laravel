@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,4 +24,8 @@ Route::middleware('auth:sanctum')->get('/accounts',[AccountController::class,'in
 Route::middleware('auth:sanctum')->post('/accounts',[AccountController::class,'store']);
 Route::middleware('auth:sanctum')->put('/accounts/{id}',[AccountController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/accounts/{id}',[AccountController::class,'destroy']);
-
+// Transactons Routes
+Route::middleware('auth:sanctum')->get('/transactions',[TransactionController::class,'index']);
+Route::middleware('auth:sanctum')->post('/transactions',[TransactionController::class,'store']);
+Route::middleware('auth:sanctum')->put('/transactions/{id}',[TransactionController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/transactions/{id}',[TransactionController::class,'destroy']);
