@@ -10,6 +10,7 @@ class Category extends Model
     protected $fillable = ['name','user_id'];
     
     protected $hidden = [
+        'user_id',
         'created_at',
         'updated_at',
     ];
