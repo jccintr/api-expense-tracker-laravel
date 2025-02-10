@@ -44,7 +44,7 @@ class AuthController extends Controller
         }
 
         $token = Auth::User()->createToken('expense-tracker');
-        return response()->json(['token'=>$token->plainTextToken],201); 
+        return response()->json(['token'=>$token->plainTextToken],200); 
       
     }
 

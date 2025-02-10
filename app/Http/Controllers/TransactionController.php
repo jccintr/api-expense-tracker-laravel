@@ -22,28 +22,20 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        /*
+        
         $validated = $request->validate([
             'description' => 'required',
-            'amount_id' => 'required',
-            'category_id' => 'required',
-            'account_id' => 'required',
+            'amount' => 'required|gt:0',
+            'category_id' => 'required|gt:0',
+            'account_id' => 'required|gt:0',
         ]);
-*/
+
        // $input = $request->all();
        $description = $request->description;
        $amount = $request->amount;
        $category_id = $request->category_id;
        $account_id = $request->account_id;
        $user_id =  Auth::User()->id;
-
-       if(!$description or !$amount or !$category_id or !$account_id){
-        return response()->json(['error'=>'Bad request'],400);
-       }
-       if($amount <=0){
-         return response()->json(['error'=>'Field amount must be greater then zero'],400);
-       }
-
 
        $newTransaction = new Transaction();
        $newTransaction->description = $description;
