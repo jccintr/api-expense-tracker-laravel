@@ -70,6 +70,13 @@ class TransactionController extends Controller
     public function update(Request $request, string $id)
     {
 
+        $validated = $request->validate([
+            'description' => 'required',
+            'amount' => 'required|gt:0',
+            'category_id' => 'required|gt:0',
+            'account_id' => 'required|gt:0',
+        ]);
+
         $transaction = Transaction::find($id);
         if(!$transaction){
             return response()->json(['error'=>'Resource not found'],404);
@@ -85,14 +92,7 @@ class TransactionController extends Controller
         $account_id = $request->account_id;
         $user_id =  Auth::User()->id;
  
-        if(!$description or !$amount or !$category_id or !$account_id){
-         return response()->json(['error'=>'Bad request'],400);
-        }
-        if($amount <=0){
-          return response()->json(['error'=>'Field amount must be greater then zero'],400);
-        }
-
-      
+         
         $transaction->description = $description;
         $transaction->amount = $amount;
         $transaction->category_id = $category_id;
