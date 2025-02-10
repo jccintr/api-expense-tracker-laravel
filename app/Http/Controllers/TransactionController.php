@@ -13,7 +13,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('user_id',Auth::User()->id)->get();
+        $transactions = Transaction::with('category')->with('account')->where('user_id',Auth::User()->id)->get();
         return response()->json($transactions,200);
     }
 
@@ -52,7 +52,7 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        $transaction = Transaction::find($id);
+        $transaction = Transaction::with('category')->with('account')->find($id);
         if(!$transaction){
             return response()->json(['error'=>'Resource not found'],404);
         }
