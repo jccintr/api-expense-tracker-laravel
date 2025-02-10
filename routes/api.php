@@ -14,6 +14,15 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/auth/register',[AuthController::class,'register']);
 Route::post('/auth/login',[AuthController::class,'login']);
+
+/*
+Route::apiResources([
+    'categories' => CategoryController::class,
+    'accounts' => AccountController::class,
+    'transactions' => TransactionController::class,
+]);
+*/
+
 // Category Routes
 Route::middleware('auth:sanctum')->get('/categories',[CategoryController::class,'index']);
 Route::middleware('auth:sanctum')->post('/categories',[CategoryController::class,'store']);
@@ -26,6 +35,7 @@ Route::middleware('auth:sanctum')->put('/accounts/{id}',[AccountController::clas
 Route::middleware('auth:sanctum')->delete('/accounts/{id}',[AccountController::class,'destroy']);
 // Transactons Routes
 Route::middleware('auth:sanctum')->get('/transactions',[TransactionController::class,'index']);
+Route::middleware('auth:sanctum')->get('/transactions/{id}',[TransactionController::class,'show']);
 Route::middleware('auth:sanctum')->post('/transactions',[TransactionController::class,'store']);
 Route::middleware('auth:sanctum')->put('/transactions/{id}',[TransactionController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/transactions/{id}',[TransactionController::class,'destroy']);

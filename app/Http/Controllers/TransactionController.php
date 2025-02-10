@@ -22,7 +22,14 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-
+        /*
+        $validated = $request->validate([
+            'description' => 'required',
+            'amount_id' => 'required',
+            'category_id' => 'required',
+            'account_id' => 'required',
+        ]);
+*/
        // $input = $request->all();
        $description = $request->description;
        $amount = $request->amount;
@@ -53,7 +60,16 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $transaction = Transaction::find($id);
+        if(!$transaction){
+            return response()->json(['error'=>'Resource not found'],404);
+        }
+
+        if($transaction->user_id != Auth::User()->id){
+            return response()->json(['error'=>'Access denied'],403);
+        }
+
+        return response()->json($transaction,200);
     }
 
     /**
@@ -89,7 +105,7 @@ class TransactionController extends Controller
         $transaction->amount = $amount;
         $transaction->category_id = $category_id;
         $transaction->account_id = $account_id;
-        $transaction->user_id = $user_id;
+        
         $transaction->save();
         return response()->json($transaction,200);
 
