@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -39,3 +40,5 @@ Route::middleware('auth:sanctum')->get('/transactions/{id}',[TransactionControll
 Route::middleware('auth:sanctum')->post('/transactions',[TransactionController::class,'store']);
 Route::middleware('auth:sanctum')->put('/transactions/{id}',[TransactionController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/transactions/{id}',[TransactionController::class,'destroy']);
+// Users Routes
+Route::middleware('auth:sanctum')->get('/users/me',[UserController::class,'getLoggedUser']);
